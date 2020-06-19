@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <link href="/output.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="grid h-screen w-screen justify-center content-center">
+      <div>
+        <video
+          id="video-1"
+          src="/out_0.mp4"
+          autoplay
+          loop
+          class="opacity-0 transition-opacity duration-1000 hidden max-h-99"
+        ></video>
+        <video
+          id="video-2"
+          src="/out_1.mp4"
+          autoplay
+          loop
+          class="opacity-0 transition-opacity duration-1000 hidden max-h-99"
+        ></video>
+        <div
+          class="flex flex-col content-center justify-center text-center mt-3"
+        >
+          <span
+            id="name"
+            class="tracking-widest transition-opacity duration-1000"
+            >samuel clovis + georgina baronian &amp; associates</span
+          >
+          <a
+            id="email"
+            href="mailto:contact@clovisbaronian.com"
+            class="hidden hover:underline tracking-widest opacity-0 transition-opacity duration-1000"
+            >contact@clovisbaronian.com</a
+          >
+        </div>
+      </div>
+    </div>
+    <script>
+      let animating = false;
+      let shown = null;
+      document.body.onclick = function () {
+        if (animating) {
+          return;
+        }
+        animating = true;
+        document.querySelector("#name").classList.add("opacity-0");
+
+        const videos = ["#video-1", "#video-2"];
+        shown =
+          shown === null
+            ? Math.floor(Math.random() * videos.length)
+            : shown === 1
+            ? 0
+            : 1;
+        const show = videos.splice(shown, 1);
+
+        document.querySelector(videos[0]).classList.remove("opacity-100");
+        document.querySelector(videos[0]).classList.add("opacity-0");
+
+        setTimeout(() => {
+          document.querySelector("#name").classList.add("hidden");
+          document.querySelector(videos[0]).classList.add("hidden");
+          document.querySelector(show[0]).classList.remove("hidden");
+          document.querySelector("#email").classList.remove("hidden");
+          setTimeout(() => {
+            document.querySelector("#email").classList.add("opacity-100");
+            document.querySelector(show[0]).classList.add("opacity-100");
+            setTimeout(() => {
+              animating = false;
+            }, 1000);
+          }, 200);
+        }, 1000);
+      };
+    </script>
+  </body>
+</html>

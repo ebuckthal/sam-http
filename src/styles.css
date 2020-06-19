@@ -1,0 +1,11 @@
+@tailwind base; /* Preflight will be injected here */
+
+@tailwind components;
+
+@tailwind utilities;
+
+video {
+  height: 1080px;
+  width: 720px;
+  max-height: 80vh !important;
+}

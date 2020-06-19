@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "prettier": "^2.0.5",
+    "tailwindcss": "^1.4.6"
+  },
+  "scripts": {
+    "build": "rm -rf dist/ && mkdir dist/ && yarn build:html && yarn build:mp4 && yarn build:css",
+    "build:html": "cp src/*.html dist/",
+    "build:mp4": "cp src/out_*.mp4 dist/",
+    "build:css": "npx tailwindcss build src/styles.css -o dist/output.css"
+  }
+}
