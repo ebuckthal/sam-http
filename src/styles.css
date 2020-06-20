@@ -4,7 +4,11 @@
 
 @tailwind utilities;
 
-video {
+html, body {
+  height: 100%;
+}
+
+img, video {
   height: 1080px;
   width: 720px;
   max-height: 80vh !important;

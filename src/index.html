@@ -3,40 +3,32 @@
     <link href="/output.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="grid h-screen w-screen justify-center content-center">
+    <div
+      class="grid min-h-full w-screen justify-center content-center md:text-sm"
+    >
       <div>
-        <video
+        <img
           id="video-1"
           src="/out_0.mp4"
-          muted
-          playsinline
-          preload="metadata"
-          autoplay
-          loop
-          class="opacity-0 transition-opacity duration-1000 hidden max-h-99"
-        ></video>
-        <video
+          class="opacity-0 object-contain transition-opacity duration-1000 hidden max-h-99"
+        />
+        <img
           id="video-2"
-          playsinline
-          muted
-          preload="metadata"
           src="/out_1.mp4"
-          autoplay
-          loop
-          class="opacity-0 transition-opacity duration-1000 hidden max-h-99"
-        ></video>
+          class="opacity-0 object-contain transition-opacity duration-1000 hidden max-h-99"
+        />
         <div
           class="flex flex-col content-center justify-center text-center mt-3"
         >
           <span
             id="name"
-            class="tracking-widest transition-opacity duration-1000"
+            class="cursor-pointer tracking-widest transition-opacity duration-1000"
             >samuel clovis + georgina baronian &amp; associates</span
           >
           <a
             id="email"
             href="mailto:contact@clovisbaronian.com"
-            class="hidden hover:underline tracking-widest opacity-0 transition-opacity duration-1000"
+            class="hidden tracking-widest opacity-0 transition-opacity duration-1000"
             >contact@clovisbaronian.com</a
           >
         </div>
@@ -78,6 +70,36 @@
           }, 200);
         }, 1000);
       };
+      var videoAttr = {};
+      Array.prototype.map.call(
+        document.querySelectorAll('img[src*=".mp4"]'),
+        function (img) {
+          var src = img.src;
+          img.src = null;
+
+          img.addEventListener("error", function (e) {
+            console.log("MP4 in image not supported. Replacing with video", e);
+            var video = document.createElement("video");
+
+            for (var key in videoAttr) {
+              video.setAttribute(key, videoAttr[key]);
+            }
+            video.setAttribute("autoplay", true);
+            video.setAttribute("loop", true);
+            video.setAttribute("mute", true);
+            video.setAttribute("playsinline", true);
+
+            for (const attr of img.attributes) {
+              video.setAttribute(attr.name, attr.value);
+            }
+
+            img.parentNode.insertBefore(video, img);
+            img.parentNode.removeChild(img);
+          });
+
+          img.src = src;
+        }
+      );
     </script>
   </body>
 </html>
