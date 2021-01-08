@@ -15,7 +15,12 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head title="sam clovis + georgina baronian &amp; associates" />
+        <Head title="sam clovis + georgina baronian &amp; associates">
+          <link rel="preload" href="/1_0.mp4" as="video" type="video/mp4" />
+          <link rel="preload" href="/1_1.mp4" as="video" type="video/mp4" />
+          <link rel="preload" href="/1_2.mp4" as="video" type="video/mp4" />
+        </Head>
+
         <body>
           <Main />
           <NextScript />

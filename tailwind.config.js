@@ -3,7 +3,11 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     letterSpacing: { widest: ".4em" },
-    extend: {},
+    extend: {
+      transitionDuration: {
+        1500: "1500ms",
+      },
+    },
   },
   variants: {
     extend: {},

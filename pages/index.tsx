@@ -1,109 +1,116 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
+import clsx from "clsx";
 
-function HomePage() {
+const VIDEOS = [["1_0.mp4", "1_1.mp4", "1_2.mp4"]];
+
+const HomePage: React.FC<{ project: number; image: number }> = ({
+  project,
+  image,
+}) => {
   const [animating, setAnimating] = useState(false);
-  const [shown, setShown] = useState(null);
+  const [showTitle, setShowTitle] = useState(true);
+  const [showEmail, setShowEmail] = useState(false);
+  const [showVideo1, setShowVideo1] = useState(false);
+  const [showVideo2, setShowVideo2] = useState(false);
+
+  const [projectImage, setProjectImage] = useState(image);
+  const [projectImage2, setProjectImage2] = useState(
+    (image + 1) % VIDEOS[project].length
+  );
 
   const onClick = function () {
+    if (showTitle) {
+      setShowTitle(false);
+      setShowVideo1(true);
+
+      setTimeout(() => {
+        setShowEmail(true);
+      }, 3000);
+      return;
+    }
     if (animating) {
       return;
     }
     setAnimating(true);
-    document.querySelector("#name").classList.add("opacity-0");
 
-    const videos = ["#video-1", "#video-2"];
-    setShown(
-      shown === null
-        ? Math.floor(Math.random() * videos.length)
-        : shown === 1
-        ? 0
-        : 1
-    );
-    const show = videos.splice(shown, 1);
-
-    document.querySelector(videos[0]).classList.remove("opacity-100");
-    document.querySelector(videos[0]).classList.add("opacity-0");
+    setShowVideo1((s) => !s);
+    setShowVideo2((s) => !s);
 
     setTimeout(() => {
-      document.querySelector("#name").classList.add("hidden");
-      document.querySelector(videos[0]).classList.add("hidden");
-      document.querySelector(show[0]).classList.remove("hidden");
-      document.querySelector("#email").classList.remove("hidden");
-      setTimeout(() => {
-        document.querySelector("#email").classList.add("opacity-100");
-        document.querySelector(show[0]).classList.add("opacity-100");
-        setTimeout(() => {
-          setAnimating(false);
-        }, 1000);
-      }, 200);
-    }, 1000);
+      if (showVideo1) {
+        setProjectImage((projectImage2 + 1) % VIDEOS[project].length);
+      } else {
+        setProjectImage2((projectImage + 1) % VIDEOS[project].length);
+      }
+      setAnimating(false);
+    }, 1500);
   };
 
-  useEffect(() => {
-    var videoAttr = {};
-    Array.prototype.map.call(
-      document.querySelectorAll('img[src*=".mp4"]'),
-      function (img) {
-        var src = img.src;
-        img.src = null;
-
-        img.addEventListener("error", function (e) {
-          console.log("MP4 in image not supported. Replacing with video", e);
-          var video = document.createElement("video");
-
-          for (var key in videoAttr) {
-            video.setAttribute(key, videoAttr[key]);
-          }
-          video.setAttribute("autoplay", "true");
-          video.setAttribute("loop", "true");
-          video.setAttribute("mute", "true");
-          video.setAttribute("playsinline", "true");
-
-          for (const attr of img.attributes) {
-            video.setAttribute(attr.name, attr.value);
-          }
-
-          img.parentNode.insertBefore(video, img);
-          img.parentNode.removeChild(img);
-        });
-
-        img.src = src;
-      }
-    );
-  }, []);
-
   return (
-    <div
-      className="h-screen w-screen flex flex-col justify-center items-center text-xl md:text-base lg:text-xs"
-      onClick={onClick}
-    >
-      <img
-        id="video-1"
-        src="/out_0.mp4"
-        className="opacity-0 object-contain transition-opacity duration-1000 hidden flex-initial h-5/6"
-      />
-      <img
-        id="video-2"
-        src="/out_1.mp4"
-        className="opacity-0 object-contain transition-opacity duration-1000 hidden flex-initial h-5/6"
-      />
-      <div className="flex flex-col content-center justify-center text-center mt-3">
+    <>
+      <div
+        className="absolute h-screen w-screen flex flex-col justify-center items-center text-xl md:text-base lg:text-xs"
+        onClick={onClick}
+      >
         <span
           id="name"
-          className="cursor-pointer tracking-widest transition-opacity duration-1000"
+          className={clsx(
+            "cursor-pointer tracking-widest transition-opacity duration-1500",
+            showTitle ? "opacity-100" : "opacity-0"
+          )}
         >
           sam clovis + georgina baronian &amp; associates
         </span>
-        <a
-          id="email"
-          href="mailto:office@clovisbaronian.com"
-          className="hidden tracking-widest opacity-0 transition-opacity duration-1000"
-        >
-          office@clovisbaronian.com
-        </a>
       </div>
-    </div>
+      <div
+        className="absolute h-screen w-screen flex justify-center items-center text-xl md:text-base lg:text-xs"
+        onClick={onClick}
+      >
+        <video
+          src={VIDEOS[project][projectImage]}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className={clsx(
+            "absolute object-contain transition-opacity duration-1500 flex-initial h-5/6",
+            showVideo1 ? "opacity-100" : "opacity-0"
+          )}
+        />
+        <video
+          src={VIDEOS[project][projectImage2]}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className={clsx(
+            "absolute object-contain transition-opacity duration-1500 flex-initial h-5/6",
+            showVideo2 ? "opacity-100" : "opacity-0"
+          )}
+        />
+        <div className="self-end content-center justify-center text-center mb-5">
+          <a
+            id="email"
+            href="mailto:office@clovisbaronian.com"
+            className={clsx(
+              "tracking-widest transition-opacity duration-1500",
+              showEmail ? "opacity-100" : "opacity-0"
+            )}
+          >
+            office@clovisbaronian.com
+          </a>
+        </div>
+      </div>
+    </>
   );
+};
+
+export async function getServerSideProps() {
+  const project = Math.floor(Math.random() * VIDEOS.length);
+  const image = Math.floor(Math.random() * VIDEOS[project].length);
+  return {
+    props: { project, image },
+  };
 }
 
 export default HomePage;
