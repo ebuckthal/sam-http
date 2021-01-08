@@ -74,35 +74,33 @@ function HomePage() {
 
   return (
     <div
-      className="h-screen grid min-h-full w-screen justify-center content-center text-xl md:text-base lg:text-xs"
+      className="h-screen w-screen flex flex-col justify-center items-center text-xl md:text-base lg:text-xs"
       onClick={onClick}
     >
-      <div className="h-full">
-        <img
-          id="video-1"
-          src="/out_0.mp4"
-          className="opacity-0 object-contain transition-opacity duration-1000 hidden max-h-99"
-        />
-        <img
-          id="video-2"
-          src="/out_1.mp4"
-          className="opacity-0 object-contain transition-opacity duration-1000 hidden max-h-99"
-        />
-        <div className="flex flex-col content-center justify-center text-center mt-3">
-          <span
-            id="name"
-            className="cursor-pointer tracking-widest transition-opacity duration-1000"
-          >
-            sam clovis + georgina baronian &amp; associates
-          </span>
-          <a
-            id="email"
-            href="mailto:office@clovisbaronian.com"
-            className="hidden tracking-widest opacity-0 transition-opacity duration-1000"
-          >
-            office@clovisbaronian.com
-          </a>
-        </div>
+      <img
+        id="video-1"
+        src="/out_0.mp4"
+        className="opacity-0 object-contain transition-opacity duration-1000 hidden flex-initial h-5/6"
+      />
+      <img
+        id="video-2"
+        src="/out_1.mp4"
+        className="opacity-0 object-contain transition-opacity duration-1000 hidden flex-initial h-5/6"
+      />
+      <div className="flex flex-col content-center justify-center text-center mt-3">
+        <span
+          id="name"
+          className="cursor-pointer tracking-widest transition-opacity duration-1000"
+        >
+          sam clovis + georgina baronian &amp; associates
+        </span>
+        <a
+          id="email"
+          href="mailto:office@clovisbaronian.com"
+          className="hidden tracking-widest opacity-0 transition-opacity duration-1000"
+        >
+          office@clovisbaronian.com
+        </a>
       </div>
     </div>
   );
