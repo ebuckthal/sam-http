@@ -1,12 +1,9 @@
-@tailwind base; /* Preflight will be injected here */
-
+/* purgecss start ignore */
+@tailwind base;
 @tailwind components;
+/* purgecss end ignore */
 
 @tailwind utilities;
-
-html, body {
-  height: 100%;
-}
 
 img, video {
   height: 1080px;
