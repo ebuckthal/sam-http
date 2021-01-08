@@ -16,7 +16,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head title="sam clovis + georgina baronian &amp; associates" />
-        <body className="100vh">
+        <body>
           <Main />
           <NextScript />
         </body>

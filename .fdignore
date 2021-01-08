@@ -1,2 +1,4 @@
 node_modules
 .next
+/out_publish/
+/out_functions/

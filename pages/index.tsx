@@ -77,7 +77,7 @@ function HomePage() {
       className="h-screen grid min-h-full w-screen justify-center content-center text-xl md:text-base lg:text-xs"
       onClick={onClick}
     >
-      <div>
+      <div className="h-full">
         <img
           id="video-1"
           src="/out_0.mp4"
