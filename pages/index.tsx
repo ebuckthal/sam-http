@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import clsx from "clsx";
 
-const VIDEOS = [["1_0.mp4", "1_1.mp4", "1_2.mp4"]];
+const VIDEOS = [["/1_0.mp4", "/1_1.mp4", "/1_2.mp4"]];
 
 const HomePage: React.FC<{ project: number; image: number }> = ({
   project,
