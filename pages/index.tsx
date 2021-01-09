@@ -1,7 +1,9 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
 const VIDEOS = [["/1_0.mp4", "/1_1.mp4", "/1_2.mp4"]];
+
+var videoAttr = { autoplay: true, loop: true, mute: true, playsinline: true };
 
 const HomePage: React.FC<{ project: number; image: number }> = ({
   project,
@@ -25,6 +27,37 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
     setCurrentVideo((s) => (s + 1) % VIDEOS[project].length);
   };
 
+  useEffect(() => {
+    Array.prototype.map.call(
+      document.querySelectorAll('img[src*=".mp4"]'),
+      function (img) {
+        var src = img.src;
+        img.src = null;
+        img.src = src;
+        img.addEventListener("error", function (e) {
+          console.log("MP4 in image not supported. Replacing with video", e);
+          var video = document.createElement("video");
+
+          video.setAttribute("autoplay", "true");
+          video.setAttribute("loop", "true");
+          video.setAttribute("muted", "true");
+          video.setAttribute("playsinline", "true");
+
+          for (
+            var imgAttr = img.attributes, len = imgAttr.length, i = 0;
+            i < len;
+            i++
+          ) {
+            video.setAttribute(imgAttr[i].name, imgAttr[i].value);
+          }
+
+          img.parentNode.insertBefore(video, img);
+          img.parentNode.removeChild(img);
+        });
+      }
+    );
+  }, []);
+
   return (
     <div className="text-xs sm:text-base">
       <div
@@ -45,20 +78,24 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
         className="flex flex-col h-screen w-screen justify-center items-center"
         onClick={onClick}
       >
-        <div className="flex-none h-5/6 relative w-full">
+        <div className="flex-none flex h-screen-75 relative w-full justify-center items-center">
           {VIDEOS[project].map((src, i) => (
-            <video
-              id={src}
-              src={src}
-              loop
-              autoPlay
-              muted
-              playsInline
+            <div
+              key={src}
               className={clsx(
-                "absolute m-auto outline-none inset-0 object-contain transition-opacity duration-1500 h-full",
+                "absolute transition-opacity duration-1500 inset-0",
                 !showTitle && i === currentVideo ? "opacity-100" : "opacity-0"
               )}
-            />
+            >
+              <video
+                className="m-auto object-contain inset-0 h-full"
+                src={src}
+                loop
+                autoPlay
+                muted
+                playsInline
+              />
+            </div>
           ))}
         </div>
         <div className="content-center justify-center text-center my-2">

@@ -4,6 +4,9 @@ module.exports = {
   theme: {
     letterSpacing: { widest: ".4em" },
     extend: {
+      height: {
+        "screen-75": "75vh",
+      },
       transitionDuration: {
         1500: "1500ms",
       },
