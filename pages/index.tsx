@@ -7,55 +7,34 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
   project,
   image,
 }) => {
-  const [animating, setAnimating] = useState(false);
   const [showTitle, setShowTitle] = useState(true);
   const [showEmail, setShowEmail] = useState(false);
-  const [showVideo1, setShowVideo1] = useState(false);
-  const [showVideo2, setShowVideo2] = useState(false);
 
-  const [projectImage, setProjectImage] = useState(image);
-  const [projectImage2, setProjectImage2] = useState(
-    (image + 1) % VIDEOS[project].length
-  );
+  const [currentVideo, setCurrentVideo] = useState(image);
 
   const onClick = function () {
     if (showTitle) {
       setShowTitle(false);
-      setShowVideo1(true);
 
       setTimeout(() => {
         setShowEmail(true);
       }, 3000);
       return;
     }
-    if (animating) {
-      return;
-    }
-    setAnimating(true);
 
-    setShowVideo1((s) => !s);
-    setShowVideo2((s) => !s);
-
-    setTimeout(() => {
-      if (showVideo1) {
-        setProjectImage((projectImage2 + 1) % VIDEOS[project].length);
-      } else {
-        setProjectImage2((projectImage + 1) % VIDEOS[project].length);
-      }
-      setAnimating(false);
-    }, 1500);
+    setCurrentVideo((s) => (s + 1) % VIDEOS[project].length);
   };
 
   return (
-    <>
+    <div className="text-xs sm:text-base">
       <div
-        className="absolute h-screen w-screen flex flex-col justify-center items-center text-xl md:text-base lg:text-xs"
+        className="absolute p-3 h-screen w-screen flex flex-col justify-center items-center"
         onClick={onClick}
       >
         <span
           id="name"
           className={clsx(
-            "cursor-pointer tracking-widest transition-opacity duration-1500",
+            "cursor-pointer tracking-widest transition-opacity duration-1500 text-center",
             showTitle ? "opacity-100" : "opacity-0"
           )}
         >
@@ -63,32 +42,26 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
         </span>
       </div>
       <div
-        className="absolute h-screen w-screen flex justify-center items-center text-xl md:text-base lg:text-xs"
+        className="flex flex-col h-screen w-screen justify-center items-center"
         onClick={onClick}
       >
-        <video
-          src={VIDEOS[project][projectImage]}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className={clsx(
-            "absolute object-contain transition-opacity duration-1500 flex-initial h-5/6",
-            showVideo1 ? "opacity-100" : "opacity-0"
-          )}
-        />
-        <video
-          src={VIDEOS[project][projectImage2]}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className={clsx(
-            "absolute object-contain transition-opacity duration-1500 flex-initial h-5/6",
-            showVideo2 ? "opacity-100" : "opacity-0"
-          )}
-        />
-        <div className="self-end content-center justify-center text-center mb-5">
+        <div className="flex-none h-5/6 relative w-full">
+          {VIDEOS[project].map((src, i) => (
+            <video
+              id={src}
+              src={src}
+              loop
+              autoPlay
+              muted
+              playsInline
+              className={clsx(
+                "absolute m-auto outline-none inset-0 object-contain transition-opacity duration-1500 h-full",
+                !showTitle && i === currentVideo ? "opacity-100" : "opacity-0"
+              )}
+            />
+          ))}
+        </div>
+        <div className="content-center justify-center text-center my-2">
           <a
             id="email"
             href="mailto:office@clovisbaronian.com"
@@ -101,7 +74,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
           </a>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
