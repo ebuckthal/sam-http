@@ -2,6 +2,8 @@ node_modules
 
 .next
 
+.DS_Store
+
 /out_publish/
 /out_functions/
 

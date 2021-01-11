@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
-const VIDEOS = [["/1_0_out.mp4", "/1_1_out.mp4", "/1_2_out.mp4"]];
+const VIDEOS = [
+  ["/1_0_out.mp4", "/1_1_out.mp4", "/1_2_out.mp4", "/1_3_out.mp4"],
+  ["/1_0_out.mp4", "/1_1_out.mp4", "/1_2_out.mp4", "/1_3_out.mp4"],
+];
 
 const HomePage: React.FC<{ project: number; image: number }> = ({
   project,
   image,
 }) => {
+  console.log(project, image);
   const [showTitle, setShowTitle] = useState(true);
   const [showEmail, setShowEmail] = useState(false);
 
