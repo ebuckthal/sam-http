@@ -2,8 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
 const VIDEOS = [
-  ["/1_0_out.mp4", "/1_1_out.mp4", "/1_2_out.mp4", "/1_3_out.mp4"],
-  ["/1_0_out.mp4", "/1_1_out.mp4", "/1_2_out.mp4", "/1_3_out.mp4"],
+  [
+    { src: "/1_0_out.mp4", poster: "/1_0_poster.jpg" },
+    { src: "/1_1_out.mp4", poster: "/1_1_poster.jpg" },
+    { src: "/1_2_out.mp4", poster: "/1_2_poster.jpg" },
+    { src: "/1_3_out.mp4", poster: "/1_3_poster.jpg" },
+  ],
 ];
 
 const HomePage: React.FC<{ project: number; image: number }> = ({
@@ -43,7 +47,11 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
           video.setAttribute("playsinline", "true");
 
           for (const imgAttr of img.attributes) {
-            video.setAttribute(imgAttr.name, imgAttr.value);
+            if (imgAttr.name === "data-poster") {
+              video.setAttribute("poster", imgAttr.value);
+            } else {
+              video.setAttribute(imgAttr.name, imgAttr.value);
+            }
           }
 
           img.parentNode.insertBefore(video, img);
@@ -74,7 +82,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
         onClick={onClick}
       >
         <div className="flex-none flex h-screen-75 relative w-full justify-center items-center">
-          {VIDEOS[project].map((src, i) => (
+          {VIDEOS[project].map(({ src, poster }, i) => (
             <div
               key={src}
               className={clsx(
@@ -84,6 +92,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
             >
               <img
                 className="m-auto object-contain inset-0 h-full outline-none"
+                data-poster={poster}
                 src={src}
               />
             </div>
