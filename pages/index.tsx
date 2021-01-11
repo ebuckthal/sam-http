@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
-const VIDEOS = [["/1_0.mp4", "/1_1.mp4", "/1_2.mp4"]];
-
-var videoAttr = { autoplay: true, loop: true, mute: true, playsinline: true };
+const VIDEOS = [["/1_0_out.mp4", "/1_1_out.mp4", "/1_2_out.mp4"]];
 
 const HomePage: React.FC<{ project: number; image: number }> = ({
   project,
@@ -18,10 +16,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
     if (showTitle) {
       setShowTitle(false);
 
-      setTimeout(() => {
-        setShowEmail(true);
-      }, 3000);
-      return;
+      setShowEmail(true);
     }
 
     setCurrentVideo((s) => (s + 1) % VIDEOS[project].length);
@@ -30,12 +25,12 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
   useEffect(() => {
     Array.prototype.map.call(
       document.querySelectorAll('img[src*=".mp4"]'),
-      function (img) {
+      (img) => {
         var src = img.src;
         img.src = null;
         img.src = src;
         img.addEventListener("error", function (e) {
-          console.log("MP4 in image not supported. Replacing with video", e);
+          console.log("MP4 in image not supported. Replacing with video");
           var video = document.createElement("video");
 
           video.setAttribute("autoplay", "true");
@@ -43,12 +38,8 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
           video.setAttribute("muted", "true");
           video.setAttribute("playsinline", "true");
 
-          for (
-            var imgAttr = img.attributes, len = imgAttr.length, i = 0;
-            i < len;
-            i++
-          ) {
-            video.setAttribute(imgAttr[i].name, imgAttr[i].value);
+          for (const imgAttr of img.attributes) {
+            video.setAttribute(imgAttr.name, imgAttr.value);
           }
 
           img.parentNode.insertBefore(video, img);
@@ -59,9 +50,9 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
   }, []);
 
   return (
-    <div className="text-xs sm:text-base">
+    <div className="text-xxs sm:text-xs">
       <div
-        className="absolute p-3 h-screen w-screen flex flex-col justify-center items-center"
+        className="absolute h-screen w-screen flex flex-col justify-center items-center"
         onClick={onClick}
       >
         <span
@@ -83,17 +74,13 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
             <div
               key={src}
               className={clsx(
-                "absolute transition-opacity duration-1500 inset-0",
+                "absolute transition-opacity duration-1500 inset-0 p-3",
                 !showTitle && i === currentVideo ? "opacity-100" : "opacity-0"
               )}
             >
-              <video
-                className="m-auto object-contain inset-0 h-full"
+              <img
+                className="m-auto object-contain inset-0 h-full outline-none"
                 src={src}
-                loop
-                autoPlay
-                muted
-                playsInline
               />
             </div>
           ))}

@@ -2,8 +2,11 @@ module.exports = {
   purge: ["./pages/**/*.tsx"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    letterSpacing: { widest: ".4em" },
+    letterSpacing: { widest: ".3em" },
     extend: {
+      fontSize: {
+        xxs: "0.6rem",
+      },
       height: {
         "screen-75": "75vh",
       },
