@@ -40,12 +40,11 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
   };
 
   return (
-    <>
+    <div onClick={onClick}>
       <div
         className={clsx(
           "flex-none flex flex-col h-screen w-screen justify-center items-center text-xxs sm:text-xs"
         )}
-        onClick={onClick}
       >
         <div className={clsx("relative", showTitle ? "hidden" : null)}>
           <div className="object-contain inset-0">
@@ -95,13 +94,13 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
           top: "50%",
         }}
         className={clsx(
-          "text-xxs sm:text-xs tracking-widest transition-opacity duration-1500 text-center fixed whitespace-nowrap",
+          "cursor-default text-xxs sm:text-xs tracking-widest transition-opacity duration-1500 text-center fixed whitespace-nowrap",
           showTitle ? "opacity-100" : "opacity-0"
         )}
       >
         sam clovis + georgina baronian &amp; associates
       </span>
-    </>
+    </div>
   );
 };
 
