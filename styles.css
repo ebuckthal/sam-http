@@ -5,8 +5,10 @@
 
 @tailwind utilities;
 
-img, video {
-  height: 1080px;
-  width: 720px;
-  max-height: 80vh !important;
+@layer components {
+  .h-video {
+    height: 1026px;
+    width: 726px;
+    max-height: 80vh !important;
+  }
 }

@@ -8,7 +8,12 @@ module.exports = {
         xxs: "0.6rem",
       },
       height: {
-        "screen-75": "75vh",
+        "video-sm": "700px",
+        "video-md": "1026px",
+      },
+      maxHeight: {
+        "3/4": "75vh",
+        video: "1026px",
       },
       transitionDuration: {
         1500: "1500ms",
