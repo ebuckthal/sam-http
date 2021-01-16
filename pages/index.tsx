@@ -5,10 +5,10 @@ const POSTER = "/1_0_poster.jpg";
 
 const VIDEOS = [
   [
-    { src: "/1_0_out.mp4" },
     { src: "/1_1_out.mp4" },
     { src: "/1_2_out.mp4" },
     { src: "/1_3_out.mp4" },
+    { src: "/1_4_out.mp4" },
   ],
   [{ src: "/2_1_out.mp4" }, { src: "/2_2_out.mp4" }],
   [{ src: "/3_1_out.mp4" }, { src: "/3_2_out.mp4" }, { src: "/3_3_out.mp4" }],
@@ -60,10 +60,10 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
           )}
         >
           <div className="relative">
-            <div className="object-contain inset-0 h-full">
+            <div className="object-contain inset-0">
               <img
                 className={clsx(
-                  "m-auto object-contain inset-0 h-full max-h-3/4 outline-none",
+                  "m-auto object-contain inset-0 max-h-3/4 outline-none",
                   "transition-opacity duration-1500 py-1 px-10 opacity-0"
                 )}
                 src={POSTER}
@@ -77,7 +77,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
                 loop
                 key={src}
                 className={clsx(
-                  "absolute m-auto object-contain inset-0 h-full max-h-3/4 md:max-h-video outline-none",
+                  "absolute m-auto object-contain inset-0 max-h-3/4 md:max-h-video outline-none",
                   "transition-opacity duration-1500 py-1 px-10",
                   showEmail && i === currentVideo ? "opacity-100" : "opacity-0"
                 )}
