@@ -20,6 +20,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
 }) => {
   const [showTitle, setShowTitle] = useState(true);
   const [showEmail, setShowEmail] = useState(false);
+  const [titleFaded, setTitleFaded] = useState(false);
 
   const [currentVideo, setCurrentVideo] = useState(image);
 
@@ -28,70 +29,57 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
       setShowTitle(false);
 
       setTimeout(() => setShowEmail(true), 100);
+      setTimeout(() => setTitleFaded(true), 1000);
     }
 
     setCurrentVideo((s) => (s + 1) % VIDEOS[project].length);
+
+    document.querySelectorAll("video").forEach((v) => {
+      v.play();
+    });
   };
 
   return (
-    <div className="text-xxs sm:text-xs">
+    <>
       <div
-        className="absolute h-screen w-screen flex flex-col justify-center items-center"
+        className={clsx(
+          "flex-none flex flex-col h-screen w-screen justify-center items-center text-xxs sm:text-xs"
+        )}
         onClick={onClick}
       >
-        <span
-          id="name"
-          className={clsx(
-            "cursor-pointer tracking-widest transition-opacity duration-1500 text-center",
-            showTitle ? "opacity-100" : "opacity-0"
-          )}
-        >
-          sam clovis + georgina baronian &amp; associates
-        </span>
-      </div>
-      <div
-        className="flex flex-col h-screen w-screen justify-center items-center"
-        onClick={onClick}
-      >
-        <div
-          className={clsx(
-            "flex-none flex relative w-full justify-center items-center",
-            showTitle ? "hidden" : null
-          )}
-        >
-          <div className="relative">
-            <div className="object-contain inset-0">
-              <img
-                className={clsx(
-                  "m-auto object-contain inset-0 max-h-3/4 outline-none",
-                  "transition-opacity duration-1500 py-1 px-10 opacity-0"
-                )}
-                src={POSTER}
-              />
-            </div>
-            {VIDEOS[project].map(({ src }, i) => (
-              <video
-                autoPlay
-                playsInline
-                muted
-                loop
-                key={src}
-                className={clsx(
-                  "absolute m-auto object-contain inset-0 max-h-3/4 md:max-h-video outline-none",
-                  "transition-opacity duration-1500 py-1 px-10",
-                  showEmail && i === currentVideo ? "opacity-100" : "opacity-0"
-                )}
-                src={src}
-              />
-            ))}
+        <div className={clsx("relative", showTitle ? "hidden" : null)}>
+          <div className="object-contain inset-0">
+            <img
+              className={clsx(
+                "m-auto object-contain inset-0 max-h-3/4 outline-none",
+                "transition-opacity duration-1500 px-10 opacity-0"
+              )}
+              src={POSTER}
+            />
           </div>
+          {VIDEOS[project].map(({ src }, i) => (
+            <video
+              autoPlay
+              playsInline
+              muted
+              loop
+              key={src}
+              className={clsx(
+                "absolute m-auto object-contain inset-0 max-h-3/4 md:max-h-video outline-none",
+                "transition-opacity duration-1500 px-10",
+                showEmail && i === currentVideo ? "opacity-100" : "opacity-0"
+              )}
+              src={src}
+            />
+          ))}
         </div>
         <div className="content-center justify-center text-center">
           <a
             id="email"
             href="mailto:office@clovisbaronian.com"
             className={clsx(
-              "tracking-widest transition-opacity duration-1500",
+              "tracking-widest transition-opacity duration-1500 block p-2",
+              showTitle ? "hidden" : null,
               showEmail ? "opacity-100" : "opacity-0"
             )}
           >
@@ -99,7 +87,21 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
           </a>
         </div>
       </div>
-    </div>
+      <span
+        id="name"
+        style={{
+          transform: "translate(-50%, -50%)",
+          left: "50%",
+          top: "50%",
+        }}
+        className={clsx(
+          "text-xxs sm:text-xs tracking-widest transition-opacity duration-1500 text-center fixed",
+          showTitle ? "opacity-100" : "opacity-0"
+        )}
+      >
+        sam clovis + georgina baronian &amp; associates
+      </span>
+    </>
   );
 };
 
