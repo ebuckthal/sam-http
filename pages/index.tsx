@@ -78,7 +78,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
             id="email"
             href="mailto:office@clovisbaronian.com"
             className={clsx(
-              "tracking-widest transition-opacity duration-1500 block p-2",
+              "tracking-widest transition-opacity duration-1500 block p-3",
               showTitle ? "hidden" : null,
               showEmail ? "opacity-100" : "opacity-0"
             )}
@@ -95,7 +95,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
           top: "50%",
         }}
         className={clsx(
-          "text-xxs sm:text-xs tracking-widest transition-opacity duration-1500 text-center fixed",
+          "text-xxs sm:text-xs tracking-widest transition-opacity duration-1500 text-center fixed whitespace-nowrap",
           showTitle ? "opacity-100" : "opacity-0"
         )}
       >
