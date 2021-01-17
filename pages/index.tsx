@@ -1,7 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
-
-const POSTER = "/1_0_poster.jpg";
+import Head from "next/head";
 
 const VIMEOS = [
   ["501301025", "501302594"],
@@ -14,89 +13,80 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
 }) => {
   const [showTitle, setShowTitle] = useState(true);
   const [showEmail, setShowEmail] = useState(false);
-  const [titleFaded, setTitleFaded] = useState(false);
 
   const [currentVideo, setCurrentVideo] = useState(image);
 
   const onClick = function () {
     if (showTitle) {
       setShowTitle(false);
-
       setTimeout(() => setShowEmail(true), 100);
-      setTimeout(() => setTitleFaded(true), 1000);
     }
 
     setCurrentVideo((s) => (s + 1) % VIMEOS[project].length);
-
-    document.querySelectorAll("video").forEach((v) => {
-      v.play();
-    });
   };
 
   return (
-    <div
-      onClick={onClick}
-      className="h-screen w-screen flex justify-center items-center"
-    >
+    <div className="text-xxs sm:text-xs text-center tracking-widest">
+      <Head>
+        <title>sam clovis + georgina baronian &amp; associates</title>
+      </Head>
       <div
-        className={clsx(
-          "flex-none flex flex-col h-screen w-screen justify-center items-center text-xxs sm:text-xs",
-          showTitle ? "hidden" : null
-        )}
+        onClick={onClick}
+        className="h-screen w-screen flex justify-center items-center"
       >
-        <div className="relative px-10">
-          <div className="inset-0 max-h-video">
+        <div
+          className={clsx(
+            "flex-none flex flex-col h-screen w-screen justify-center",
+            "items-center",
+            showTitle ? "hidden" : null
+          )}
+        >
+          <div className="relative px-10">
+            {/* This image is used to keep the "magic" height/width ratio */}
             <img
-              className={clsx(
-                "m-auto object-contain inset-0 max-h-video outline-none",
-                "transition-opacity duration-1500 opacity-0"
-              )}
-              src={POSTER}
+              className="object-cover w-full h-auto max-h-video"
+              src="/1.png"
             />
-          </div>
 
-          {VIMEOS[project].map((href, i) => (
-            <iframe
-              onClick={onClick}
-              id={href}
-              key={href}
+            {VIMEOS[project].map((id, i) => (
+              <iframe
+                onClick={onClick}
+                id={id}
+                key={id}
+                className={clsx(
+                  "absolute w-full h-full inset-0",
+                  "transition-opacity duration-1500",
+                  showEmail && i === currentVideo ? "opacity-100" : "opacity-0"
+                )}
+                src={`https://player.vimeo.com/video/${id}?background=1&quality=720p`}
+                frameBorder="0"
+                allow="autoplay; fullscreen"
+                allowFullScreen
+              ></iframe>
+            ))}
+            <div className="absolute inset-0"></div>
+          </div>
+          <div className="content-center justify-center">
+            <a
+              href="mailto:office@clovisbaronian.com"
               className={clsx(
-                "absolute w-full h-full inset-0 outline-none",
-                "transition-opacity duration-1500",
-                showEmail && i === currentVideo ? "opacity-100" : "opacity-0"
+                "transition-opacity duration-1500 block p-3",
+                showEmail ? "opacity-100" : "opacity-0"
               )}
-              src={`https://player.vimeo.com/video/${href}?background=1&quality=720p`}
-              width="506"
-              height="564"
-              frameBorder="0"
-              allow="autoplay; fullscreen"
-              allowFullScreen
-            ></iframe>
-          ))}
-          <div className="absolute inset-0"></div>
+            >
+              office@clovisbaronian.com
+            </a>
+          </div>
         </div>
-        <div className="content-center justify-center text-center">
-          <a
-            id="email"
-            href="mailto:office@clovisbaronian.com"
-            className={clsx(
-              "tracking-widest transition-opacity duration-1500 block p-3",
-              showEmail ? "opacity-100" : "opacity-0"
-            )}
-          >
-            office@clovisbaronian.com
-          </a>
-        </div>
+        <span
+          className={clsx(
+            "cursor-default transition-opacity duration-1500 absolute",
+            showTitle ? "opacity-100" : "opacity-0"
+          )}
+        >
+          sam clovis + georgina baronian &amp; associates
+        </span>
       </div>
-      <span
-        id="name"
-        className={clsx(
-          "cursor-default text-xxs sm:text-xs tracking-widest transition-opacity duration-1500 absolute whitespace-nowrap",
-          showTitle ? "opacity-100" : "opacity-0"
-        )}
-      >
-        sam clovis + georgina baronian &amp; associates
-      </span>
     </div>
   );
 };

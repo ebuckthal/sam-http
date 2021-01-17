@@ -15,8 +15,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head title="sam clovis + georgina baronian &amp; associates"></Head>
-
+        <Head />
         <body>
           <Main />
           <NextScript />
