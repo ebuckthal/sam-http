@@ -3,15 +3,9 @@ import clsx from "clsx";
 
 const POSTER = "/1_0_poster.jpg";
 
-const VIDEOS = [
-  [
-    { src: "/1_1_out.mp4" },
-    { src: "/1_2_out.mp4" },
-    { src: "/1_3_out.mp4" },
-    { src: "/1_4_out.mp4" },
-  ],
-  [{ src: "/2_1_out.mp4" }, { src: "/2_2_out.mp4" }],
-  [{ src: "/3_1_out.mp4" }, { src: "/3_2_out.mp4" }, { src: "/3_3_out.mp4" }],
+const VIMEOS = [
+  ["501301025", "501302594"],
+  ["501304437", "501306722"],
 ];
 
 const HomePage: React.FC<{ project: number; image: number }> = ({
@@ -32,7 +26,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
       setTimeout(() => setTitleFaded(true), 1000);
     }
 
-    setCurrentVideo((s) => (s + 1) % VIDEOS[project].length);
+    setCurrentVideo((s) => (s + 1) % VIMEOS[project].length);
 
     document.querySelectorAll("video").forEach((v) => {
       v.play();
@@ -46,31 +40,36 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
           "flex-none flex flex-col h-screen w-screen justify-center items-center text-xxs sm:text-xs"
         )}
       >
-        <div className={clsx("relative", showTitle ? "hidden" : null)}>
-          <div className="object-contain inset-0">
+        <div className={clsx("relative")}>
+          <div className="object-contain inset-0 max-h-video">
             <img
               className={clsx(
-                "m-auto object-contain inset-0 max-h-3/4 outline-none",
+                "m-auto object-contain inset-0 max-h-video outline-none",
                 "transition-opacity duration-1500 px-10 opacity-0"
               )}
               src={POSTER}
             />
           </div>
-          {VIDEOS[project].map(({ src }, i) => (
-            <video
-              autoPlay
-              playsInline
-              muted
-              loop
-              key={src}
+
+          {VIMEOS[project].map((href, i) => (
+            <iframe
+              onClick={onClick}
+              id={href}
+              key={href}
               className={clsx(
-                "absolute m-auto object-contain inset-0 max-h-3/4 md:max-h-video outline-none",
+                "absolute w-full h-full object-contain inset-0 max-h-video outline-none",
                 "transition-opacity duration-1500 px-10",
                 showEmail && i === currentVideo ? "opacity-100" : "opacity-0"
               )}
-              src={src}
-            />
+              src={`https://player.vimeo.com/video/${href}?background=1`}
+              width="506"
+              height="564"
+              frameBorder="0"
+              allow="autoplay; fullscreen"
+              allowFullScreen
+            ></iframe>
           ))}
+          <div className="absolute inset-0"></div>
         </div>
         <div className="content-center justify-center text-center">
           <a
@@ -105,8 +104,8 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
 };
 
 export async function getServerSideProps() {
-  const project = Math.floor(Math.random() * VIDEOS.length);
-  const image = Math.floor(Math.random() * VIDEOS[project].length);
+  const project = Math.floor(Math.random() * VIMEOS.length);
+  const image = Math.floor(Math.random() * VIMEOS[project].length);
   return {
     props: { project, image },
   };

@@ -7,13 +7,8 @@ module.exports = {
       fontSize: {
         xxs: "0.6rem",
       },
-      height: {
-        "video-sm": "700px",
-        "video-md": "1026px",
-      },
       maxHeight: {
-        "3/4": "75vh",
-        video: "1026px",
+        video: "500px",
       },
       transitionDuration: {
         1500: "1500ms",
