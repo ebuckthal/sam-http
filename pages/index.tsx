@@ -40,7 +40,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
           "flex-none flex flex-col h-screen w-screen justify-center items-center text-xxs sm:text-xs"
         )}
       >
-        <div className={clsx("relative px-10")}>
+        <div className={clsx("relative px-10", showTitle ? "hidden" : null)}>
           <div className="object-contain inset-0 max-h-video">
             <img
               className={clsx(
@@ -61,7 +61,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
                 "transition-opacity duration-1500",
                 showEmail && i === currentVideo ? "opacity-100" : "opacity-0"
               )}
-              src={`https://player.vimeo.com/video/${href}?background=1`}
+              src={`https://player.vimeo.com/video/${href}?background=1&quality=720p`}
               width="506"
               height="564"
               frameBorder="0"
@@ -77,7 +77,6 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
             href="mailto:office@clovisbaronian.com"
             className={clsx(
               "tracking-widest transition-opacity duration-1500 block p-3",
-              showTitle ? "hidden" : null,
               showEmail ? "opacity-100" : "opacity-0"
             )}
           >
