@@ -15,8 +15,11 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head />
+        <Head>
+          <link rel="icon" href="data:," />
+        </Head>
         <body>
+          <script>0</script>
           <Main />
           <NextScript />
         </body>

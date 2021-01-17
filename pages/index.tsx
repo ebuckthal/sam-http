@@ -7,22 +7,20 @@ const VIMEOS = [
   ["501304437", "501306722"],
 ];
 
-const HomePage: React.FC<{ project: number; image: number }> = ({
-  project,
-  image,
-}) => {
+const HomePage: React.FC<{ PROJECT: string[] }> = ({ PROJECT }) => {
   const [showTitle, setShowTitle] = useState(true);
   const [showEmail, setShowEmail] = useState(false);
+  const [showId, setShowId] = useState(PROJECT[0]);
 
-  const [currentVideo, setCurrentVideo] = useState(image);
-
-  const onClick = function () {
+  const onClick = () => {
     if (showTitle) {
       setShowTitle(false);
       setTimeout(() => setShowEmail(true), 100);
+      return;
     }
 
-    setCurrentVideo((s) => (s + 1) % VIMEOS[project].length);
+    // Increment showId to next ID in the PROJECT list
+    setShowId((s) => PROJECT[(PROJECT.indexOf(s) + 1) % PROJECT.length]);
   };
 
   return (
@@ -36,11 +34,11 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
       >
         <div
           className={clsx(
-            "flex-none flex flex-col h-screen w-screen justify-center",
-            "items-center",
+            "flex-none flex flex-col h-screen w-screen justify-center items-center",
             showTitle ? "hidden" : null
           )}
         >
+          {/* CAROUSEL */}
           <div className="relative px-10">
             {/* This image is used to keep the "magic" height/width ratio */}
             <img
@@ -48,7 +46,7 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
               src="/1.png"
             />
 
-            {VIMEOS[project].map((id, i) => (
+            {PROJECT.map((id) => (
               <iframe
                 onClick={onClick}
                 id={id}
@@ -56,21 +54,22 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
                 className={clsx(
                   "absolute w-full h-full inset-0",
                   "transition-opacity duration-1500",
-                  showEmail && i === currentVideo ? "opacity-100" : "opacity-0"
+                  showEmail && id === showId ? "opacity-100" : "opacity-0"
                 )}
                 src={`https://player.vimeo.com/video/${id}?background=1&quality=720p`}
-                frameBorder="0"
-                allow="autoplay; fullscreen"
                 allowFullScreen
-              ></iframe>
+              />
             ))}
             <div className="absolute inset-0"></div>
           </div>
+
+          {/* EMAIL */}
           <div className="content-center justify-center">
             <a
+              onClick={(e) => e.stopPropagation()}
               href="mailto:office@clovisbaronian.com"
               className={clsx(
-                "transition-opacity duration-1500 block p-3",
+                "transition-opacity duration-1500 block p-3 outline-none",
                 showEmail ? "opacity-100" : "opacity-0"
               )}
             >
@@ -78,6 +77,8 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
             </a>
           </div>
         </div>
+
+        {/* TITLE */}
         <span
           className={clsx(
             "cursor-default transition-opacity duration-1500 absolute",
@@ -92,10 +93,21 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
 };
 
 export async function getServerSideProps() {
-  const project = Math.floor(Math.random() * VIMEOS.length);
-  const image = Math.floor(Math.random() * VIMEOS[project].length);
+  function shuffleArray(array: any[]) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+  }
+
+  // choose a random project from list of VIMEO IDS and randomize it
+  const PROJECT = VIMEOS[Math.floor(Math.random() * VIMEOS.length)];
+  shuffleArray(PROJECT);
+
   return {
-    props: { project, image },
+    props: { PROJECT },
   };
 }
 
