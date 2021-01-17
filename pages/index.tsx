@@ -34,14 +34,18 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
   };
 
   return (
-    <div onClick={onClick}>
+    <div
+      onClick={onClick}
+      className="h-screen w-screen flex justify-center items-center"
+    >
       <div
         className={clsx(
-          "flex-none flex flex-col h-screen w-screen justify-center items-center text-xxs sm:text-xs"
+          "flex-none flex flex-col h-screen w-screen justify-center items-center text-xxs sm:text-xs",
+          showTitle ? "hidden" : null
         )}
       >
-        <div className={clsx("relative px-10", showTitle ? "hidden" : null)}>
-          <div className="object-contain inset-0 max-h-video">
+        <div className="relative px-10">
+          <div className="inset-0 max-h-video">
             <img
               className={clsx(
                 "m-auto object-contain inset-0 max-h-video outline-none",
@@ -86,13 +90,8 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
       </div>
       <span
         id="name"
-        style={{
-          transform: "translate(-50%, -50%)",
-          left: "50%",
-          top: "50%",
-        }}
         className={clsx(
-          "cursor-default text-xxs sm:text-xs tracking-widest transition-opacity duration-1500 text-center fixed whitespace-nowrap",
+          "cursor-default text-xxs sm:text-xs tracking-widest transition-opacity duration-1500 absolute whitespace-nowrap",
           showTitle ? "opacity-100" : "opacity-0"
         )}
       >
