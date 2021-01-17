@@ -40,12 +40,12 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
           "flex-none flex flex-col h-screen w-screen justify-center items-center text-xxs sm:text-xs"
         )}
       >
-        <div className={clsx("relative")}>
+        <div className={clsx("relative px-10")}>
           <div className="object-contain inset-0 max-h-video">
             <img
               className={clsx(
                 "m-auto object-contain inset-0 max-h-video outline-none",
-                "transition-opacity duration-1500 px-10 opacity-0"
+                "transition-opacity duration-1500 opacity-0"
               )}
               src={POSTER}
             />
@@ -57,8 +57,8 @@ const HomePage: React.FC<{ project: number; image: number }> = ({
               id={href}
               key={href}
               className={clsx(
-                "absolute w-full h-full object-contain inset-0 max-h-video outline-none",
-                "transition-opacity duration-1500 px-10",
+                "absolute w-full h-full inset-0 outline-none",
+                "transition-opacity duration-1500",
                 showEmail && i === currentVideo ? "opacity-100" : "opacity-0"
               )}
               src={`https://player.vimeo.com/video/${href}?background=1`}
