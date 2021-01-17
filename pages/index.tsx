@@ -24,9 +24,14 @@ const HomePage: React.FC<{ PROJECT: string[] }> = ({ PROJECT }) => {
   };
 
   return (
-    <div className="text-xxs sm:text-xs text-center tracking-widest">
+    <main className="text-xxs sm:text-xs text-center tracking-widest">
       <Head>
         <title>sam clovis + georgina baronian &amp; associates</title>
+        <meta
+          name="description"
+          content="sam clovis + georgina baronian & associates"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div
         onClick={onClick}
@@ -43,6 +48,8 @@ const HomePage: React.FC<{ PROJECT: string[] }> = ({ PROJECT }) => {
             {/* This image is used to keep the "magic" height/width ratio */}
             <img
               className="object-cover w-full h-auto max-h-video"
+              width="1088"
+              height="1538"
               src="/1.png"
             />
 
@@ -88,7 +95,7 @@ const HomePage: React.FC<{ PROJECT: string[] }> = ({ PROJECT }) => {
           sam clovis + georgina baronian &amp; associates
         </span>
       </div>
-    </div>
+    </main>
   );
 };
 
