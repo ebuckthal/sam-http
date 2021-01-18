@@ -16,6 +16,9 @@ const HomePage: React.FC<{ PROJECT: string[] }> = ({ PROJECT }) => {
     if (showTitle) {
       setShowTitle(false);
       setTimeout(() => setShowEmail(true), 100);
+      document.querySelectorAll("video").forEach((v) => {
+        v.play();
+      });
       return;
     }
 
