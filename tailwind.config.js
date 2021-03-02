@@ -6,8 +6,8 @@ module.exports = {
       letterSpacing: { widest: "0.3em", widerest: "0.5em" },
       fontSize: {
         xxs: "0.6rem",
-        xxxs: "0.55rem",
-        xxxxs: "0.45rem",
+        xxxs: "0.5rem",
+        xxxxs: "0.44rem",
       },
       maxHeight: {
         video: "500px",
