@@ -89,8 +89,8 @@ const HomePage: React.FC<{ PROJECT: string[] }> = ({ PROJECT }) => {
                   "block outline-none flex flex-row justify-between text-xxxs mt-1"
                 )}
               >
-                {"office@clovisbaronian.com".split("").map((s) => (
-                  <span>{s}</span>
+                {"office@clovisbaronian.com".split("").map((s, i) => (
+                  <span key={i}>{s}</span>
                 ))}
               </a>
               <span

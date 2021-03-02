@@ -7,7 +7,7 @@ module.exports = {
       fontSize: {
         xxs: "0.6rem",
         xxxs: "0.55rem",
-        xxxxs: "0.5rem",
+        xxxxs: "0.45rem",
       },
       maxHeight: {
         video: "500px",
