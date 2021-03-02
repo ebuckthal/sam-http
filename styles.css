@@ -3,4 +3,15 @@
 @tailwind components;
 /* purgecss end ignore */
 
+
 @tailwind utilities;
+
+
+.justify-single {
+  text-align: justify;
+}
+.justify-single:after {
+  content: "";
+  display: inline-block;
+  width: 100%;	
+}

@@ -17,6 +17,7 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <link rel="icon" href="data:," />
+          <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         </Head>
         <body>
           <script>0</script>
